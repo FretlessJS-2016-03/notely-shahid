@@ -1,7 +1,9 @@
+require('dotenv').load();
 var express = require('express');
 var notelyServerApp = express();
 var Note = require('./models/note');
 var bodyParser = require('body-parser');
+
 
 // Allow ourselves to use `req.body` to work with form data
 notelyServerApp.use(bodyParser.json());
