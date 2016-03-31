@@ -40,7 +40,13 @@
       $scope.note = NotesService.findById($state.params.noteId);
 
       $scope.save = function(){
-         NotesService.create($scope.note);
+        if ($scope.note._id){
+          NotesService.update($scope.note);
+        }
+        else {
+             NotesService.create($scope.note);
+        }
+
       };
   }
 

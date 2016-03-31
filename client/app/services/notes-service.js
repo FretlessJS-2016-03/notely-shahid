@@ -29,6 +29,16 @@
             _this.notes.unshift(response.data.note);
           });
         };
+        _this.update =function(note){
+          return $http.put('http://localhost:3030/notes/' + note._id, {
+            note: {
+                title: note.title,
+                body_html: note.body_html
+            }
+          }).then(function(response){
+            _this.notes.unshift(response.data.note);
+          });
+        };
 
         _this.findById = function(noteId) {
             for (var i = 0; i < _this.notes.length; i++) {
