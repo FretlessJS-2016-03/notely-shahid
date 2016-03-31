@@ -36,8 +36,15 @@
                 body_html: note.body_html
             }
           }).then(function(response){
-            _this.notes.unshift(response.data.note);
+            _this.replaceNote(response.data.note);
           });
+        };
+        _this.replaceNote = function(updatedNote){
+          for (var i = 0; i < _this.notes.length; i++) {
+            if (_this.notes[i]._id === updatedNote._id) {
+              _this.notes[i] = updatedNote;
+            }
+          }
         };
 
         _this.findById = function(noteId) {
