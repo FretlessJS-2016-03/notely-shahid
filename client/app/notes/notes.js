@@ -41,7 +41,7 @@
         NotesService.update($scope.note);
       }
       else {
-        NotesService.create($scope.note).then(function(response){
+        NotesService.create($scope.note).then(function(response) {
           $state.go('notes.form', { noteId: response.data.note._id });
         });
       }
