@@ -1,18 +1,27 @@
 <form ng-submit="save()">
   <p>
-    <input type="text" name="title" ng-model="note.title" id="note_title" placeholder="Title Your Note"></input>
+    <input
+      ng-model="note.title"
+      type="text"
+      name="title"
+      id="note_title"
+      placeholder="Title your note">
   </p>
   <p>
     <textarea
-    ng-model="note.body_html"
-    name="body_html"
-    placeholder="Just start Typing..."></textarea>
+      ng-model="note.body_html"
+      name="body_html"
+      placeholder="Just start typing..."
+      ></textarea>
   </p>
   <div class="form-actions">
     <input
-    type="submit"
-    name="commit"
-    value="Save"
-    class="btn btn-default">
+      type="submit"
+      name="commit"
+      value="Save"
+      class="btn btn-default">
+    <a class="btn" ng-click="delete()" ng-show="note._id">
+      <i class="fa fa-trash-o"></i>
+    </a>
   </div>
 </form>

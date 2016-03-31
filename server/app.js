@@ -4,7 +4,6 @@ var notelyServerApp = express();
 var Note = require('./models/note');
 var bodyParser = require('body-parser');
 
-
 // Allow ourselves to use `req.body` to work with form data
 notelyServerApp.use(bodyParser.json());
 
@@ -12,12 +11,12 @@ notelyServerApp.use(bodyParser.json());
 notelyServerApp.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE');
   next();
 });
 
 notelyServerApp.get('/notes', function(req, res) {
-  Note.find().sort({updated_at: 'desc'}).then(function(notes) {
+  Note.find().sort({ updated_at: 'desc' }).then(function(notes) {
     res.json(notes);
   });
 });
@@ -36,18 +35,30 @@ notelyServerApp.post('/notes', function(req, res) {
   });
 });
 
-notelyServerApp.put('/notes/:noteId', function (req, res){
-  Note.findOne({ _id: req.params.noteId }).then(function(note){
+notelyServerApp.put('/notes/:noteId', function(req, res) {
+  Note.findOne({ _id: req.params.noteId }).then(function(note) {
     note.title = req.body.note.title;
     note.body_html = req.body.note.body_html;
-    note.save().then(function(noteData){
+    note.save().then(function() {
       res.json({
         message: 'Saved!',
-        note: noteData
+        note: note
       });
     });
   });
 });
+
+notelyServerApp.delete('/notes/:noteId', function(req, res) {
+  Note.findOne({ _id: req.params.noteId }).then(function(note) {
+    note.remove().then(function() {
+      res.json({
+        message: 'That note has been deleted.',
+        note: note
+      });
+    });
+  });
+});
+
 notelyServerApp.listen(3030, function() {
   console.log('Listening on http://localhost:3030');
 });
